@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Ваши стили здесь */
+        /* Пример: */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .container {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Информация о пополнении</h1>
+        <p>1 Рубль = 1 Котомонета</p>
+        <p>При переводе в комментариях писать свой NickName</p>
+        <img class="qr-code" src="{{ url_for('static', filename='qr_code.png') }}" alt="QR Code">
+        <p>Номер телефона для перевода:</p> 
+        <p><h1>+7 (917) 246 3944</h1></p>
+        <button class="back-button" onclick="goBack()">Назад</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "{{ url_for('main_page') }}"; // Перенаправляем на главную страницу
+        }
+    </script>
+</body>
+</html>

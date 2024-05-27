@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f7f7f7; /* Цвет фона */
+            background: linear-gradient(to right, #ff9966, #ff5e62, #ff2a68, #ff0080); /* Градиентные цвета */
+            animation: gradientAnimation 15s infinite; /* Анимация для переливания */
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            padding: 20px;
+            text-align: right;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        .header h2 {
+            margin: 5px 0;
+            color: #fff;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .menu {
+            position: fixed;
+            top: 70px;
+            left: -250px; /* Увеличили отступ */
+            background-color: #222;
+            padding: 30px; /* Увеличили внутренний отступ */
+            transition: left 0.3s;
+            z-index: 999;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column; /* Располагаем кнопки вертикально */
+            width: 200px; /* Увеличили ширину */
+        }
+
+        .menu.show-menu {
+            left: 0;
+        }
+
+        .menu-button-container {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+
+        .menu-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 15px 25px; /* Увеличили внутренний отступ */
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px; /* Добавляем отступ между кнопками */
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .info-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            overflow: hidden; /* Для обрезания текста, который выходит за границы */
+            white-space: pre-wrap; /* Для переноса слов */
+            border-right: 2px solid #333; /* Линия, которая будет "печатать" текст */
+            animation: typing 4s steps(40, end); /* Анимация "печатания" */
+        }
+
+        @keyframes typing {
+            from { width: 0; } /* Начальная ширина линии (ничего не видно) */
+            to { width: 100%; } /* Конечная ширина линии (печатается весь текст) */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="menu-button-container">
+            <button class="menu-button" onclick="toggleMenu()">☰</button> <!-- Кнопка для выдвижного меню -->
+        </div>
+        <h2>Никнейм: {{ username }}</h2>
+        <h2>Баланс: {{ user_balance }} Котомонет</h2>
+    </div>
+    <div class="menu" id="menu">
+        <button onclick="goToGames()">Купить Игры</button> <!-- Первая кнопка меню -->
+        <button onclick="goToPurchasedGames()">Приобретенные игры</button> <!-- Вторая кнопка меню -->
+        <button onclick="goToBalance()">Пополнить баланс</button> <!-- Третья кнопка меню -->
+        <button onclick="logout()">Выход</button> <!-- Четвертая кнопка меню -->
+    </div>
+    <div class="container">
+        <h1>Добро пожаловать</h1>
+        <h1>Virtual Paws Hub</h1>
+        <div class="info">
+            <p id="typing-text" class="info-text"></p>
+        </div>
+    </div>
+
+    <script>
+        function goToPurchasedGames() {
+            window.location.href = "{{ url_for('purchased_games') }}"; // Перенаправляем на страницу с приобретенными играми
+        }
+
+        function goToBalance() {
+            window.location.href = "{{ url_for('balance') }}"; // Перенаправляем на страницу с пополнением баланса
+        }
+        const text = `Virtual Paws Hub (VPH) - это онлайн магазин видеоигр, где вы можете приобрести игры с использованием виртуальной валюты - Котомонеток. VPH предлагает широкий выбор игр для различных платформ, а также регулярные акции и специальные предложения для своих клиентов. Удобный интерфейс сайта и быстрая обработка заказов делают покупки на VPH легкими и приятными. Погрузитесь в мир игр с Virtual Paws Hub!`;
+        const typingTextElement = document.getElementById('typing-text');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typingTextElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50); // Устанавливаем задержку между буквами (в миллисекундах)
+            }
+        }
+
+        window.onload = typeWriter;
+        
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            menu.classList.toggle('show-menu'); // Переключаем класс для показа/скрытия меню
+        }
+
+        function goToGames() {
+            window.location.href = "{{ url_for('games') }}"; // Перенаправляем на маршрут /games
+        }
+
+        function logout() {
+            window.location.href = "{{ url_for('index') }}"; // Перенаправляем на страницу osn.html
+        }
+
+    </script>
+</body>
+</html>

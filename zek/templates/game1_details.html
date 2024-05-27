@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game 1 Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            margin-bottom: 30px;
+        }
+
+        .details img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .details h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .details p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .price {
+            font-size: 24px;
+            color: #ff6600; /* оранжевый цвет */
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .buy-button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .buy-button:hover {
+            background-color: #005f7f;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: red;
+        }
+
+        .success {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Никнейм: {{ username }}</h2>
+        <h2>Баланс: {{ user_balance }} Котомонет</h2>
+
+        <div class="details">
+            <img src="{{ url_for('static', filename='game1.jpg') }}" alt="Game 1">
+            <h3>GTA5</h3>
+            <p>Это криминальный экшн с открытым миром, в котором игроки могут исследовать огромный город Лос-Сантос, совершать различные преступления, участвовать в перестрелках, гонках и других зрелищных событиях. Игра предлагает захватывающий сюжет, а также множество заданий и активностей, которые позволяют погрузиться в атмосферу подпольного мира и почувствовать себя настоящим гангстером.</p>
+            <p class="price">Цена: 2199 Котомонетов</p>
+            {% if user_balance >= 2199 %}
+                <button class="buy-button" onclick="buyGame()">Купить</button>
+            {% else %}
+                <p class="message">У вас недостаточно Котомонетов, пополните баланс!</p>
+            {% endif %}
+            <p id="purchase-message" class="success" style="display: none;">Игра куплена</p>
+        </div>
+
+        <button class="back-button" onclick="location.href='{{ url_for('games') }}'">Назад</button>
+    </div>
+
+    <script>
+        function buyGame() {
+            var confirmation = confirm('Вы уверены, что хотите купить эту игру?');
+            if (confirmation) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            document.getElementById('purchase-message').style.display = 'block';
+                            document.querySelector('.buy-button').style.display = 'none';
+                        } else {
+                            alert('Вы уже преобрели игру!!!');
+                        }
+                    }
+                };
+                xhr.open('POST', '/buy_game', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify({ game_id: 1 }));
+            }
+        }
+    </script>
+</body>
+</html>

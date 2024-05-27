@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding: 0 20px;
+        }
+
+        .game {
+            flex-basis: calc(33.33% - 40px);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .game:hover {
+            transform: translateY(-5px);
+        }
+
+        .game img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .game h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .game p {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .game button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .game button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            display: block;
+            margin: 20px auto;
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h2>Никнейм: {{ username }}</h2>
+    <h2>Баланс: {{ user_balance }} Котомонет</h2>
+
+    <div class="container">
+        <div class="game">
+            <img src="{{ url_for('static', filename='game1.jpg') }}" alt="Game 1">
+            <h3>GTA5</h3>
+            <p>это криминальный экшн с открытым миром, в котором игроки могут исследовать огромный город Лос-Сантос, совершать различные преступления, участвовать в перестрелках, гонках и других зрелищных событиях. Игра предлагает захватывающий сюжет, а также множество заданий и активностей, которые позволяют погрузиться в атмосферу подпольного мира и почувствовать себя настоящим гангстером.</p>
+            <button onclick="location.href='{{ url_for('game1_details') }}'">Подробнее</button>
+        </div>
+        <div class="game">
+            <img src="{{ url_for('static', filename='game2.jpg') }}" alt="Game 2">
+            <h3>CS 2</h3>
+            <p>CS2 - это продолжение культовой игры Counter-Strike, в которой игроки разделяются на две команды: террористов и контр-террористов. Цель каждой команды зависит от режима игры - может быть установка/разминирование бомбы, спасение заложника или просто уничтожение противника. CS2 предлагает широкий выбор оружия, карт и режимов игры, а также возможность для игроков проявить свои навыки стратегии, координации и меткости.</p>
+            <button onclick="location.href='{{ url_for('game2_details') }}'">Подробнее</button>
+        </div>
+        <div class="game">
+            <img src="{{ url_for('static', filename='game3.jpg') }}" alt="Game 3">
+            <h3>Мафия 2</h3>
+            <p>Мафия 2 - это игра в жанре экшн-приключения, которая разворачивается в вымышленном городе Empire Bay в период с 1940-х по 1950-е годы. Игрок управляет персонажем по имени Вито Скалетта, который вступает в мафиозную организацию, где ему предстоит совершать различные криминальные действия, выполнять задания, участвовать в перестрелках и погонях. Игра отличается кинематографичным сюжетом, реалистичным геймплеем и атмосферой времен Великой депрессии и послевоенного периода.</p>
+            <button onclick="location.href='{{ url_for('game3_details') }}'">Подробнее</button>
+        </div>
+    </div>
+    <div class="container">
+        <div class="game">
+            <img src="{{ url_for('static', filename='game4.jpg') }}" alt="Game 4">
+            <h3>Assassin's Creed IV</h3>
+            <p>Assassin's Creed IV: Чёрный флаг - приключенческая игра в жанре экшен-приключение, разработанная студией Ubisoft. Игра представляет собой продолжение серии Assassin's Creed и рассказывает историю разборок пиратов на Карибских островах в 18 веке. Главный герой игры - пират Эдвард Кенуэй, который ищет легендарную сокровищницу. Игроку предстоит исследовать открытый мир игры, сражаться с врагами, управлять кораблем, улучшать свою экипировку и выполнять разнообразные миссии.</p>
+            <button onclick="location.href='{{ url_for('game4_details') }}'">Подробнее</button>
+        </div>
+        <div class="game">
+            <img src="{{ url_for('static', filename='game5.jpg') }}" alt="Game 5">
+            <h3>Red Dead Redemption 2</h3>
+            <p>Red Dead Redemption 2 - это приключенческая игра в жанре экшен с открытым миром, разработанная студией Rockstar Games. Игроки берут на себя роль бандита Артура Моргана, который странствует по Дикому Западу в поисках приключений. Игра предлагает огромный открытый мир, полный опасностей, дикой природы и интересных персонажей, а также множество заданий и миссий, влияющих на развитие сюжета. Игрокам предстоит принимать моральные решения, влияющие на ход игры, и сталкиваться с различными вызовами, чтобы выжить в безжалостном мире Дикого Запада.</p>
+            <button onclick="location.href='{{ url_for('game5_details') }}'">Подробнее</button>
+        </div>
+        <div class="game">
+            <img src="{{ url_for('static', filename='game6.jpg') }}" alt="Game 6">
+            <h3>S.T.A.L.K.E.R.: Зов Припяти</h3>
+            <p>это шутер от первого лица, действие которого разворачивается в зоне отчуждения Чернобыльской АЭС. Игроку предстоит исследовать опасные радиоактивные местности, сражаться с мутантами и другими опасностями, а также выполнять разнообразные задания от фракций и НПС. Зов Припяти является продолжением культовой серии S.T.A.L.K.E.R. и предлагает захватывающий геймплей и атмосферу постапокалиптического мира.)</p>
+            <button onclick="location.href='{{ url_for('game6_details') }}'">Подробнее</button>
+        </div>
+    </div>
+
+    <a class="back-button" href="{{ url_for('main_page') }}">Назад</a>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchased Games</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Ваши стили здесь */
+        /* Пример: */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .game {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .game img {
+            width: 100px; /* Размер изображения */
+            height: auto; /* Автоматическая высота */
+            margin-right: 20px; /* Отступ справа */
+        }
+
+        .game p {
+            font-size: 18px; /* Размер шрифта */
+        }
+
+        .game .purchased {
+            color: green; /* Цвет для купленных игр */
+        }
+
+        .game .not-purchased {
+            color: red; /* Цвет для не купленных игр */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Список ваших игр</h1>
+        <h2>Никнейм: {{ username }}</h2>
+        <h2>Баланс: {{ user_balance }} Котомонет</h2>
+        {% if purchased_games %}
+            {% for game in purchased_games %}
+                <div class="game">
+                    <img src="{{ url_for('static', filename=game.image) }}" alt="{{ game.name }}">
+                    <p class="{% if game.purchased %}purchased{% else %}not-purchased{% endif %}">{{ game.name }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Вы пока не приобрели не одной игры</p>
+        {% endif %}
+        <button onclick="goBack()">Назад</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "{{ url_for('main_page') }}"; // Перенаправляем на главную страницу
+        }
+    </script>
+</body>
+</html>
